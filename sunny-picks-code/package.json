@@ -1,0 +1,16 @@
+{
+  "name": "sunnys-expert-picks",
+  "version": "1.0.0",
+  "description": "AI-powered sports betting analysis tool",
+  "main": "api/analyze.js",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "keywords": ["sports", "betting", "claude", "ai"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
