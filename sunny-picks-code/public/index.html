@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunny's Expert Picks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Sun circle -->
+            <circle cx="70" cy="70" r="42" fill="#FFD700"/>
+            
+            <!-- Sun rays -->
+            <line x1="70" y1="15" x2="70" y2="23" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="103" y1="25" x2="98" y2="32" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="120" y1="53" x2="113" y2="58" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="125" y1="85" x2="117" y2="85" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="120" y1="117" x2="113" y2="112" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="103" y1="145" x2="98" y2="138" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="70" y1="155" x2="70" y2="147" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="37" y1="145" x2="42" y2="138" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="20" y1="117" x2="27" y2="112" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="15" y1="85" x2="23" y2="85" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="20" y1="53" x2="27" y2="58" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="37" y1="25" x2="42" y2="32" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Sunglasses -->
+            <rect x="48" y="62" width="20" height="14" rx="3" fill="#1a1a1a" opacity="0.9"/>
+            <rect x="72" y="62" width="20" height="14" rx="3" fill="#1a1a1a" opacity="0.9"/>
+            <line x1="68" y1="69" x2="72" y2="69" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="48" y1="69" x2="43" y2="69" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="92" y1="69" x2="97" y2="69" stroke="#1a1a1a" stroke-width="2"/>
+            
+            <!-- Smile with teeth -->
+            <path d="M 55 85 Q 70 95 85 85" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <rect x="62" y="85" width="4" height="6" fill="white"/>
+            <rect x="67" y="85" width="4" height="6" fill="white"/>
+            <rect x="72" y="85" width="4" height="6" fill="white"/>
+            <rect x="57" y="85" width="4" height="5" fill="white"/>
+            <rect x="77" y="85" width="4" height="5" fill="white"/>
+            
+            <!-- Basketball -->
+            <circle cx="150" cy="80" r="30" fill="#FF6B35"/>
+            <path d="M 150 50 Q 155 80 150 110" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+            <path d="M 150 50 Q 145 80 150 110" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+            <ellipse cx="150" cy="80" rx="30" ry="12" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+            <line x1="120" y1="80" x2="180" y2="80" stroke="#1a1a1a" stroke-width="2"/>
+        </svg>
+        
+        <div class="header">
+            <h1>Sunny's Expert Picks</h1>
+        </div>
+
+        <div class="card">
+            <div class="input-group">
+                <label for="league">League</label>
+                <select id="league">
+                    <option value="">Select league...</option>
+                    <option value="NFL">NFL</option>
+                    <option value="NBA">NBA</option>
+                    <option value="NHL">NHL</option>
+                    <option value="MLB">MLB</option>
+                    <option value="NCAA Football">NCAA Football</option>
+                    <option value="NCAA Basketball">NCAA Basketball</option>
+                    <option value="Premier League">Premier League</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="matchup">Matchup</label>
+                <input type="text" id="matchup" placeholder="e.g., Lakers vs Celtics">
+            </div>
+
+            <div class="input-group">
+                <label for="comments">Comments (Optional)</label>
+                <input type="text" id="comments" placeholder="e.g., Consider home court advantage or weather">
+                <div class="quick-actions">
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Consider home court advantage')">🏠 Home Court</button>
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Weather conditions may impact play')">🌧️ Weather</button>
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Revenge game scenario')">🔥 Revenge Game</button>
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Back-to-back game fatigue')">😴 Fatigue</button>
+                </div>
+            </div>
+
+            <button class="button" id="analyzeBtn">Make Picks</button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p class="loading-text">Analyzing matchup data...</p>
+            </div>
+
+            <div class="results" id="results"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
