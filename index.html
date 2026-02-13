@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunny's Expert Picks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Open+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(74, 144, 226, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(53, 122, 189, 0.04) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                position: relative;
+                left: 0;
+                top: 0;
+                transform: none;
+                margin: 0 auto 10px;
+                display: block;
+                width: 80px;
+                height: 80px;
+            }
+
+            .header h1 {
+                font-size: 2.5em;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .input-group {
+                margin-bottom: 20px;
+            }
+
+            input, select {
+                font-size: 16px;
+                padding: 14px 16px;
+            }
+
+            .button {
+                padding: 16px 30px;
+                font-size: 16px;
+            }
+
+            .pick-header h2 {
+                font-size: 1.5em;
+            }
+
+            .pick-value {
+                font-size: 1.8em !important;
+            }
+
+            .analysis h3 {
+                font-size: 1.1em;
+            }
+
+            .analysis p {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .pick-value {
+                font-size: 1.5em !important;
+            }
+        }
+
+        .header h1 {
+            font-size: 4em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            text-shadow: 0 0 1px rgba(74, 144, 226, 0.5);
+            font-weight: 700;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .header p {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.95em;
+            color: #888;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #4a90e2;
+            font-size: 0.85em;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-family: 'Space Mono', monospace;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 16px 20px;
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            font-size: 18px;
+            font-family: 'Open Sans', sans-serif;
+            color: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.15);
+        }
+
+        input::placeholder {
+            color: #555;
+        }
+
+        .button {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: #ffffff;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 2px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s ease;
+        }
+
+        .button:hover::before {
+            left: 100%;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(74, 144, 226, 0.4);
+        }
+
+        .button:active {
+            transform: translateY(0);
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .spinner::before,
+        .spinner::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .spinner::before {
+            width: 100%;
+            height: 100%;
+            border: 3px solid rgba(74, 144, 226, 0.1);
+        }
+
+        .spinner::after {
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top-color: #4a90e2;
+            border-right-color: #4a90e2;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9em;
+            color: #888;
+            letter-spacing: 0.05em;
+        }
+
+        .results {
+            display: none;
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pick-header {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.15) 0%, rgba(53, 122, 189, 0.15) 100%);
+            border-left: 4px solid #4a90e2;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 2px;
+        }
+
+        .pick-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: -0.01em;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .pick-header .matchup {
+            font-family: 'Space Mono', monospace;
+            font-size: 1em;
+            color: #4a90e2;
+            letter-spacing: 0.05em;
+        }
+
+        .pick-box {
+            background: rgba(30, 30, 30, 0.5);
+            border-left: 3px solid #4a90e2;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 2px;
+        }
+
+        .pick-box h3 {
+            color: #4a90e2;
+            margin-bottom: 15px;
+            font-size: 1em;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .pick-box .pick-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .confidence-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 2px;
+            font-weight: 700;
+            font-size: 0.9em;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .confidence-high {
+            background: rgba(74, 144, 226, 0.2);
+            color: #4a90e2;
+            border: 1px solid #4a90e2;
+        }
+
+        .confidence-medium {
+            background: rgba(255, 204, 0, 0.2);
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+        }
+
+        .confidence-low {
+            background: rgba(255, 68, 102, 0.2);
+            color: #ff4466;
+            border: 1px solid #ff4466;
+        }
+
+        .analysis {
+            background: rgba(20, 20, 20, 0.6);
+            padding: 30px;
+            border-radius: 2px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .analysis h3 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .verification-notice {
+            background: rgba(255, 204, 0, 0.1);
+            border-left: 3px solid #ffcc00;
+            padding: 15px 20px;
+            margin-top: 20px;
+            border-radius: 2px;
+            font-size: 0.9em;
+            color: #ffcc00;
+        }
+
+        .verification-notice strong {
+            display: block;
+            margin-bottom: 8px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85em;
+            letter-spacing: 0.05em;
+        }
+
+        .verification-notice p {
+            color: #ccc;
+            line-height: 1.6;
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .analysis p {
+            line-height: 1.8;
+            color: #b0b0b0;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            white-space: pre-line;
+            font-style: normal;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .analysis p strong {
+            display: block;
+            color: #4a90e2;
+            font-size: 0.95em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            letter-spacing: 0.05em;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .analysis p strong:first-child {
+            margin-top: 0;
+        }
+
+        .disclaimer {
+            background: rgba(255, 204, 0, 0.05);
+            border: 1px solid rgba(255, 204, 0, 0.3);
+            border-radius: 2px;
+            padding: 25px;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #999;
+        }
+
+        .disclaimer strong {
+            display: block;
+            margin-bottom: 10px;
+            color: #ffcc00;
+            font-family: 'Space Mono', monospace;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.85em;
+        }
+
+        .error {
+            background: rgba(255, 68, 102, 0.1);
+            border: 1px solid rgba(255, 68, 102, 0.3);
+            color: #ff4466;
+            padding: 25px;
+            border-radius: 2px;
+            margin-top: 30px;
+        }
+
+        .error strong {
+            display: block;
+            margin-bottom: 10px;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            background: rgba(74, 144, 226, 0.1);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            color: #4a90e2;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Open Sans', sans-serif;
+            white-space: nowrap;
+        }
+
+        .quick-btn:active {
+            background: rgba(74, 144, 226, 0.2);
+            transform: scale(0.95);
+        }
+
+        @media (hover: hover) {
+            .quick-btn:hover {
+                background: rgba(74, 144, 226, 0.2);
+                border-color: #4a90e2;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <svg class="logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Sun circle (bigger) -->
+            <circle cx="70" cy="70" r="42" fill="#FFD700"/>
+            
+            <!-- Sun rays (shorter) -->
+            <line x1="70" y1="15" x2="70" y2="23" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="103" y1="25" x2="98" y2="32" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="120" y1="53" x2="113" y2="58" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="125" y1="85" x2="117" y2="85" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="120" y1="117" x2="113" y2="112" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="103" y1="145" x2="98" y2="138" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="70" y1="155" x2="70" y2="147" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="37" y1="145" x2="42" y2="138" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="20" y1="117" x2="27" y2="112" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="15" y1="85" x2="23" y2="85" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="20" y1="53" x2="27" y2="58" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            <line x1="37" y1="25" x2="42" y2="32" stroke="#FFD700" stroke-width="3" stroke-linecap="round"/>
+            
+            <!-- Sunglasses -->
+            <rect x="48" y="62" width="20" height="14" rx="3" fill="#1a1a1a" opacity="0.9"/>
+            <rect x="72" y="62" width="20" height="14" rx="3" fill="#1a1a1a" opacity="0.9"/>
+            <line x1="68" y1="69" x2="72" y2="69" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="48" y1="69" x2="43" y2="69" stroke="#1a1a1a" stroke-width="2"/>
+            <line x1="92" y1="69" x2="97" y2="69" stroke="#1a1a1a" stroke-width="2"/>
+            
+            <!-- Smile with teeth -->
+            <path d="M 55 85 Q 70 95 85 85" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- Teeth -->
+            <rect x="62" y="85" width="4" height="6" fill="white"/>
+            <rect x="67" y="85" width="4" height="6" fill="white"/>
+            <rect x="72" y="85" width="4" height="6" fill="white"/>
+            <rect x="57" y="85" width="4" height="5" fill="white"/>
+            <rect x="77" y="85" width="4" height="5" fill="white"/>
+            
+            <!-- Basketball -->
+            <circle cx="150" cy="80" r="30" fill="#FF6B35"/>
+            <path d="M 150 50 Q 155 80 150 110" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+            <path d="M 150 50 Q 145 80 150 110" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+            <ellipse cx="150" cy="80" rx="30" ry="12" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+            <line x1="120" y1="80" x2="180" y2="80" stroke="#1a1a1a" stroke-width="2"/>
+        </svg>
+        
+        <div class="header">
+            <h1>Sunny's Expert Picks</h1>
+        </div>
+
+        <div class="card">
+            <div class="input-group">
+                <label for="league">League</label>
+                <select id="league">
+                    <option value="">Select league...</option>
+                    <option value="NFL">NFL</option>
+                    <option value="NBA">NBA</option>
+                    <option value="NHL">NHL</option>
+                    <option value="MLB">MLB</option>
+                    <option value="NCAA Football">NCAA Football</option>
+                    <option value="NCAA Basketball">NCAA Basketball</option>
+                    <option value="Premier League">Premier League</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="matchup">Matchup</label>
+                <input type="text" id="matchup" placeholder="e.g., Lakers vs Celtics">
+            </div>
+
+            <div class="input-group">
+                <label for="spread">Comments (Optional)</label>
+                <input type="text" id="spread" placeholder="e.g., Consider home court advantage or weather">
+                <div class="quick-actions">
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Consider home court advantage')">🏠 Home Court</button>
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Weather conditions may impact play')">🌧️ Weather</button>
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Revenge game scenario')">🔥 Revenge Game</button>
+                    <button type="button" class="quick-btn" onclick="addQuickComment('Back-to-back game fatigue')">😴 Fatigue</button>
+                </div>
+            </div>
+
+            <button class="button" id="analyzeBtn">Make Picks</button>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p class="loading-text">Analyzing matchup data...</p>
+            </div>
+
+            <div class="results" id="results"></div>
+        </div>
+
+    <script>
+        function addQuickComment(comment) {
+            const commentsField = document.getElementById('spread');
+            if (commentsField.value) {
+                commentsField.value += '; ' + comment;
+            } else {
+                commentsField.value = comment;
+            }
+        }
+
+        document.getElementById('analyzeBtn').addEventListener('click', analyzePick);
+        
+        document.getElementById('matchup').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') analyzePick();
+        });
+
+        async function analyzePick() {
+            const league = document.getElementById('league').value;
+            const matchup = document.getElementById('matchup').value.trim();
+            const comments = document.getElementById('spread').value.trim();
+
+            if (!league || !matchup) {
+                alert('Please select a league and enter a matchup');
+                return;
+            }
+
+            console.log('=== STARTING ANALYSIS ===');
+            console.log('League:', league);
+            console.log('Matchup:', matchup);
+            console.log('Comments:', comments || 'none');
+
+            const loadingEl = document.getElementById('loading');
+            const resultsEl = document.getElementById('results');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+
+            loadingEl.classList.add('active');
+            resultsEl.classList.remove('active');
+            analyzeBtn.disabled = true;
+
+            try {
+                console.log('Sending API request...');
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 6000,
+                        messages: [{
+                            role: 'user',
+                            content: `You are a sports betting analyst. Research: ${league} - ${matchup}${comments ? `\n\nConsider: ${comments}` : ''}
+
+CRITICAL INSTRUCTIONS:
+1. Use web search to find RECENT, VERIFIED information
+2. ONLY include information you can verify from search results
+3. If you cannot find specific data (like exact records or recent games), state "Data not available" rather than guessing
+4. Double-check all statistics and game results
+5. Include the date/source of information when possible
+
+Search for:
+- Current team records (verify with official league sources)
+- Injury reports (check today's date: ${new Date().toLocaleDateString()})
+- Recent game results (last 5-7 games with actual scores and dates)
+- Current betting lines
+
+Respond ONLY with this exact JSON format (no extra text):
+{
+"pick":"Team and spread",
+"confidence":"7",
+"relevantData":"**Records** (as of DATE)\\n• Team A: X-Y (verify from search)\\n• Team B: X-Y (verify from search)\\n\\n**Injuries** (as of ${new Date().toLocaleDateString()})\\n• List verified injuries or state 'No major injuries reported'\\n\\n**Recent Form** (last 5-7 games with dates and scores)\\n• Team A: List actual games with dates and scores\\n• Team B: List actual games with dates and scores",
+"logic":"• Primary reason based on verified data\\n• Second reason with specific evidence\\n• Third reason with specific evidence",
+"concerns":"• Risk factor with evidence\\n• Counterpoint with evidence"
+}
+
+CONFIDENCE SCALE (1-10):
+- 1-3: Low confidence - significant uncertainty, conflicting data, or many concerns
+- 4-6: Medium confidence - some solid factors but notable risks
+- 7-8: High confidence - strong data support with manageable concerns
+- 9-10: Very high confidence - overwhelming evidence, minimal concerns
+
+Use the full 1-10 range. Avoid defaulting to middle values.
+
+ACCURACY CHECK: Before responding, verify:
+- Are these the correct team records?
+- Are these actual recent games with real scores?
+- Are injury reports current?
+- Did I verify this information from search results?
+
+If you cannot verify information, use phrases like "Recent data unavailable" rather than providing potentially incorrect information.`
+                        }],
+                        tools: [{
+                            type: 'web_search_20250305',
+                            name: 'web_search'
+                        }]
+                    })
+                });
+
+                console.log('=== MOBILE DEBUG START ===');
+                console.log('Response status:', response.status);
+                console.log('Response ok:', response.ok);
+                
+                const rawData = await response.text();
+                console.log('RAW RESPONSE TEXT:', rawData);
+                console.log('RAW RESPONSE LENGTH:', rawData.length);
+                
+                let data;
+                try {
+                    data = JSON.parse(rawData);
+                } catch (e) {
+                    console.log('Failed to parse response as JSON:', e);
+                    throw new Error('API returned invalid JSON: ' + rawData.substring(0, 200));
+                }
+                
+                console.log('Full data object:', JSON.stringify(data, null, 2));
+                
+                if (data.error) {
+                    console.log('API Error:', data.error);
+                    throw new Error(data.error.message || 'API request failed');
+                }
+
+                if (!data.content || data.content.length === 0) {
+                    console.log('No content in response');
+                    throw new Error('No response received');
+                }
+                
+                console.log('Content blocks:', data.content.length);
+                data.content.forEach((block, i) => {
+                    console.log(`Block ${i} type:`, block.type);
+                    if (block.type === 'text') {
+                        console.log(`Block ${i} text length:`, block.text?.length || 0);
+                        console.log(`Block ${i} text preview:`, block.text?.substring(0, 100));
+                    }
+                });
+                
+                const fullResponse = data.content
+                    .map(item => item.type === 'text' ? item.text : '')
+                    .filter(Boolean)
+                    .join('\n');
+
+                console.log('Full response length:', fullResponse.length);
+                console.log('Full response preview:', fullResponse.substring(0, 300));
+
+                if (!fullResponse) {
+                    throw new Error('Empty response');
+                }
+
+                let cleanResponse = fullResponse.trim();
+                
+                // Remove markdown code blocks if present
+                cleanResponse = cleanResponse.replace(/```json\s*/g, '').replace(/```\s*/g, '');
+                
+                // Try to extract JSON if it's embedded in text
+                const jsonMatch = cleanResponse.match(/\{[\s\S]*\}/);
+                if (jsonMatch) {
+                    cleanResponse = jsonMatch[0];
+                }
+                
+                console.log('Clean response length:', cleanResponse.length);
+                console.log('Clean response:', cleanResponse);
+                console.log('=== MOBILE DEBUG END ===');
+                
+                let analysis;
+                try {
+                    analysis = JSON.parse(cleanResponse);
+                } catch (parseError) {
+                    console.log('Parse error. Response:', cleanResponse);
+                    console.log('Full response:', fullResponse);
+                    console.log('Parse error details:', parseError);
+                    
+                    // Check if response looks incomplete (common on mobile)
+                    if (!cleanResponse.endsWith('}')) {
+                        throw new Error('Response was cut off (incomplete JSON). Try again or use a better network connection.');
+                    }
+                    
+                    // Try to repair common JSON issues
+                    let repairedResponse = cleanResponse;
+                    
+                    // Add missing closing brace if needed
+                    const openBraces = (repairedResponse.match(/\{/g) || []).length;
+                    const closeBraces = (repairedResponse.match(/\}/g) || []).length;
+                    if (openBraces > closeBraces) {
+                        repairedResponse += '}';
+                        console.log('Attempting to repair JSON with missing closing brace');
+                        try {
+                            analysis = JSON.parse(repairedResponse);
+                            console.log('Successfully repaired JSON!');
+                        } catch (e) {
+                            throw new Error('Failed to parse response. The AI returned: ' + cleanResponse.substring(0, 200));
+                        }
+                    } else {
+                        throw new Error('Failed to parse response. The AI returned: ' + cleanResponse.substring(0, 200));
+                    }
+                }
+
+                console.log('Parsed analysis:', analysis);
+                console.log('Has pick:', !!analysis.pick);
+                console.log('Has confidence:', !!analysis.confidence);
+                console.log('Has relevantData:', !!analysis.relevantData);
+                console.log('Has logic:', !!analysis.logic);
+                console.log('Has concerns:', !!analysis.concerns);
+                
+                // Log actual values to see what's there
+                console.log('Pick value:', analysis.pick);
+                console.log('Confidence value:', analysis.confidence);
+                console.log('RelevantData length:', analysis.relevantData?.length);
+                console.log('Logic length:', analysis.logic?.length);
+                console.log('Concerns length:', analysis.concerns?.length);
+
+                if (!analysis.pick || !analysis.confidence) {
+                    console.log('Missing critical fields (pick or confidence)');
+                    throw new Error(`Invalid response format - missing critical fields. Fields present: ${Object.keys(analysis).join(', ')}`);
+                }
+                
+                // Provide fallbacks for optional fields that might be missing
+                analysis.relevantData = analysis.relevantData || 'No data available';
+                analysis.logic = analysis.logic || 'No analysis provided';
+                analysis.concerns = analysis.concerns || 'No concerns listed';
+                
+                console.log('Analysis validated and ready to display');
+
+                displayResults(matchup, league, analysis);
+
+            } catch (error) {
+                console.log('ERROR OCCURRED:', error.message);
+                console.error('Error:', error);
+                console.error('Error stack:', error.stack);
+                
+                const errorMessage = error.message || 'Failed to analyze matchup';
+                const isMobile = navigator.userAgent.includes('Mobile');
+                
+                console.log('Error message:', errorMessage);
+                console.log('User agent:', navigator.userAgent);
+                console.log('League:', league);
+                console.log('Matchup:', matchup);
+                
+                resultsEl.innerHTML = `
+                    <div class="error">
+                        <strong>Error</strong>
+                        ${errorMessage}
+                        <br><br>
+                        <small>Device: ${isMobile ? 'Mobile' : 'Desktop'}</small>
+                    </div>
+                `;
+                resultsEl.classList.add('active');
+            } finally {
+                loadingEl.classList.remove('active');
+                analyzeBtn.disabled = false;
+            }
+        }
+
+        function displayResults(matchup, league, analysis) {
+            const resultsEl = document.getElementById('results');
+            
+            // Convert confidence number to color class
+            const confidenceNum = parseInt(analysis.confidence) || 5;
+            let confidenceClass, confidenceLabel;
+            
+            if (confidenceNum >= 9) {
+                confidenceClass = 'confidence-high';
+                confidenceLabel = 'Very High';
+            } else if (confidenceNum >= 7) {
+                confidenceClass = 'confidence-high';
+                confidenceLabel = 'High';
+            } else if (confidenceNum >= 4) {
+                confidenceClass = 'confidence-medium';
+                confidenceLabel = 'Medium';
+            } else {
+                confidenceClass = 'confidence-low';
+                confidenceLabel = 'Low';
+            }
+
+            // Convert **Header** to <strong>Header</strong>
+            const formatText = (text) => {
+                return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            };
+
+            resultsEl.innerHTML = `
+                <div class="pick-header">
+                    <h2>Analysis Results</h2>
+                    <div class="matchup">${league}: ${matchup}</div>
+                </div>
+
+                <div class="pick-box">
+                    <h3>Recommended Pick</h3>
+                    <div class="pick-value">${analysis.pick}</div>
+                    <span class="confidence-badge ${confidenceClass}">
+                        ${confidenceNum}/10 - ${confidenceLabel} Confidence
+                    </span>
+                </div>
+
+                <div class="verification-notice">
+                    <strong>⚠️ VERIFY BEFORE BETTING</strong>
+                    <p>Always independently verify stats, injuries, and game results before placing any bets. AI-generated analysis may contain errors or outdated information. Check official league sources and recent news.</p>
+                    <button class="quick-btn" style="margin-top: 10px;" onclick="openVerificationLinks('${league}', '${matchup.replace(/'/g, "\\'")}')">
+                        🔍 Quick Verify Sources
+                    </button>
+                </div>
+
+                <div class="analysis">
+                    <h3>Relevant Data</h3>
+                    <p>${formatText(analysis.relevantData)}</p>
+                </div>
+
+                <div class="analysis">
+                    <h3>Logic for Pick</h3>
+                    <p>${analysis.logic}</p>
+                </div>
+
+                <div class="analysis">
+                    <h3>Concerns</h3>
+                    <p>${analysis.concerns}</p>
+                </div>
+            `;
+
+            resultsEl.classList.add('active');
+        }
+
+        function openVerificationLinks(league, matchup) {
+            const teams = matchup.split(/\s+vs\s+|\s+at\s+/i);
+            const searchQuery = encodeURIComponent(`${league} ${matchup} latest news stats`);
+            
+            // Open Google search for the matchup
+            window.open(`https://www.google.com/search?q=${searchQuery}`, '_blank');
+            
+            // Give user option to open more specific searches
+            if (confirm('Open injury report search?')) {
+                const injuryQuery = encodeURIComponent(`${league} ${matchup} injury report today`);
+                window.open(`https://www.google.com/search?q=${injuryQuery}`, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
